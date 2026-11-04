@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slides That Speak | TED Talk Studio 5</title>
+<style>
+:root{--cob:#2541B2;--cob2:#E3E8FB;--lem:#FFE45E;--lem2:#FFF8CF;--rose:#FF6392;--rose2:#FFE3EC;--ink:#151A33;--muted:#5D6280;--bg:#F5F6FC;--line:#DFE2F2;--ok:#1FA971;--ok2:#DDF5EA;--r:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:17px}
+button{font:inherit;cursor:pointer;border:none}
+input,textarea,select{font:inherit;color:var(--ink)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.top{position:sticky;top:0;z-index:50;background:var(--ink);color:#fff;box-shadow:0 4px 18px rgba(21,26,51,.3)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.5px}
+.frame{width:34px;height:26px;border:3px solid var(--lem);border-radius:5px;display:grid;place-items:center;font-size:13px;background:var(--cob)}
+.logo small{display:block;font-weight:600;opacity:.7;font-size:11px;letter-spacing:1.5px}
+.spacer{flex:1}
+.pts{background:var(--lem);color:var(--ink);font-weight:900;border-radius:99px;padding:6px 14px;font-size:15px;white-space:nowrap}
+.tbtn{background:rgba(255,255,255,.12);color:#fff;border-radius:99px;padding:7px 13px;font-size:14px;font-weight:700}
+.tbtn:hover{background:rgba(255,255,255,.22)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:1080px;margin:0 auto;scrollbar-width:none}
+.tab{flex:1 0 auto;background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;display:flex;gap:6px;align-items:center;justify-content:center;opacity:.75}
+.tab.on{background:var(--cob);opacity:1}
+.tab .ok{display:none}.tab.done .ok{display:inline}
+.hero{position:relative;overflow:hidden;color:#fff;padding:56px 0 64px;background:var(--cob)}
+.hero .tiles{position:absolute;right:-30px;top:10px;display:grid;grid-template-columns:repeat(3,110px);gap:12px;transform:rotate(-12deg);opacity:.95;pointer-events:none}
+.hero .tiles i{display:block;height:74px;border-radius:10px;animation:bob 4s ease-in-out infinite}
+.hero .tiles i:nth-child(3n){animation-delay:-1.3s}.hero .tiles i:nth-child(3n+1){animation-delay:-2.6s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.hero h1{font-size:clamp(36px,6.5vw,66px);line-height:1;font-weight:900;letter-spacing:-1px;max-width:600px;position:relative}
+.hero h1 span{color:var(--lem)}
+.hero p{max-width:540px;margin-top:14px;font-size:19px;opacity:.95;position:relative}
+.namebox{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;max-width:600px;position:relative}
+.namebox input{flex:1 1 200px;border-radius:14px;border:3px solid transparent;padding:13px 16px;font-size:17px}
+.namebox input:focus{outline:none;border-color:var(--lem)}
+.loadhint{margin-top:12px;font-size:15px;opacity:.9;position:relative}
+.loadhint label{color:var(--lem);font-weight:800;cursor:pointer;text-decoration:underline}
+.hero.small{padding:22px 0 24px}
+.hero.small p,.hero.small .namebox,.hero.small .loadhint,.hero.small .tiles{display:none}
+.hero.small h1{font-size:clamp(24px,4vw,34px)}
+main{padding:28px 0 60px}
+.phase{display:none;animation:fade .35s ease}.phase.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.phead{display:flex;align-items:center;gap:14px;margin:6px 0 18px;flex-wrap:wrap}
+.pnum{width:60px;height:46px;border-radius:8px;border:4px solid var(--ink);display:grid;place-items:center;font-size:24px;flex:none}
+.phead h2{font-size:clamp(26px,4vw,36px);font-weight:900;line-height:1.1}
+.phead p{color:var(--muted);font-weight:600}
+.card{background:#fff;border-radius:var(--r);padding:22px;margin-bottom:18px;box-shadow:0 6px 22px rgba(21,26,51,.06);border:2px solid var(--line)}
+.card h3{font-size:22px;font-weight:900;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card h3 .em{font-size:26px}
+.hint{color:var(--muted);font-size:15px;margin-bottom:14px}
+.btn{background:var(--cob);color:#fff;font-weight:800;border-radius:14px;padding:12px 20px;font-size:16px;box-shadow:0 4px 0 #172B7E;transition:transform .1s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #172B7E}
+.btn.lem{background:var(--lem);color:var(--ink);box-shadow:0 4px 0 #C9AE1E}
+.btn.rose{background:var(--rose);box-shadow:0 4px 0 #C93D68}
+.btn.alt{background:var(--ink);box-shadow:0 4px 0 #000}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.sm{padding:7px 14px;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.next{display:flex;justify-content:flex-end;margin-top:8px}
+.objectives{background:linear-gradient(135deg,var(--cob2),var(--lem2));border:none}
+.objectives li{margin:6px 0 6px 22px;font-weight:600}
+.chip{background:#fff;border:2px solid var(--line);border-radius:99px;padding:8px 14px;font-weight:700;font-size:15px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip:disabled{color:var(--ink);cursor:default}.chip.on:disabled{color:#fff}
+.chip.ok{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok2)}
+.chip.no{border-color:#F3A0B6;text-decoration:line-through}
+.fb{margin-top:10px;padding:12px 14px;border-radius:14px;font-weight:600;display:none}
+.fb.show{display:block;animation:fade .3s}
+.fb.good{background:var(--ok2);color:#0B5C3B}.fb.bad{background:var(--rose2);color:#8A1E3E}.fb.info{background:var(--cob2);color:#1A2E86}
+.progress{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:linear-gradient(90deg,var(--cob),var(--rose));width:0;transition:width .4s}
+.opts{display:grid;gap:8px}
+.opt{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;text-align:left;font-weight:600;font-size:15px;color:var(--ink)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.opt:hover{border-color:var(--cob)}
+.opt.right{background:var(--ok2);border-color:var(--ok)}
+.opt.wrong{background:var(--rose2);border-color:var(--rose)}
+.speak{background:var(--ink);color:#fff;border-radius:99px;padding:6px 12px;font-size:13px;font-weight:700}
+/* mock slides */
+.ms{aspect-ratio:16/9;border-radius:14px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background-size:cover;background-position:center}
+.ms .big{font-size:clamp(40px,9vw,84px);line-height:1}
+.ms .cap{font-weight:900;font-size:clamp(16px,3vw,30px);padding:0 6%;margin-top:6px;line-height:1.1;position:relative;z-index:1}
+.ms.photo::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.65))}
+.ms.photo .cap{position:absolute;left:0;right:0;bottom:7%}
+.ms.photo .big{display:none}
+.textslide{background:#2E3440;color:#ddd;align-items:flex-start;justify-content:flex-start;text-align:left;padding:4% 5%;font-size:clamp(9px,1.4vw,13px);font-family:"Times New Roman",serif}
+.textslide h5{color:#7FC8F8;font-size:1.7em;font-family:Arial;margin-bottom:.5em}
+.textslide li{margin:0 0 .5em 1.2em}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.vs{grid-template-columns:1fr}}
+.vcol{display:flex;flex-direction:column;gap:8px}
+.vcol.win .ms{outline:5px solid var(--ok);outline-offset:3px}
+.meter{height:20px;border-radius:99px;background:#EEF0F8;overflow:hidden;position:relative}
+.meter i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--rose),var(--lem),var(--ok));transition:width .6s}
+.meterlab{display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--muted)}
+.scene{aspect-ratio:16/9;border-radius:16px;display:grid;place-items:center;font-size:clamp(54px,12vw,110px);position:relative;overflow:hidden}
+.scene small{position:absolute;bottom:8px;left:12px;font-size:13px;font-weight:800;color:#fff;opacity:.85}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:14px}
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:10px}
+.ty{border-radius:16px;padding:12px;text-align:center;font-weight:800;color:#fff}
+.ty .big{font-size:30px;display:block}
+.tbins{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+@media(max-width:700px){.tbins{grid-template-columns:repeat(3,1fr)}}
+.tbins button{border-radius:14px;padding:10px 6px;font-weight:800;font-size:13px;color:#fff}
+.tbins button span{display:block;font-size:24px}
+/* doctor */
+.fixes{display:grid;gap:8px}
+.fix{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700;text-align:left}
+.fix.on{border-color:var(--ok);background:var(--ok2)}
+.fix .t{margin-left:auto;font-size:22px}
+.docslide{aspect-ratio:16/9;border-radius:14px;overflow:hidden;position:relative;transition:all .4s}
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:12px}
+.tip{border-radius:18px;padding:16px;color:#fff;cursor:pointer;min-height:150px;position:relative;transition:.2s}
+.tip:hover{transform:translateY(-3px)}
+.tip .big{font-size:34px}
+.tip h4{font-size:18px;font-weight:900}
+.tip p{font-size:14px;opacity:.95;display:none;margin-top:6px;font-weight:600}
+.tip.on p{display:block}
+.tip.on::after{content:"✅";position:absolute;top:10px;right:12px}
+.why3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.why3{grid-template-columns:1fr}}
+.why3 div{background:var(--lem2);border-radius:16px;padding:14px;text-align:center;font-weight:800}
+.why3 .big{font-size:34px;display:block}
+/* arabic */
+.ar{font-family:"Geeza Pro","Noto Naskh Arabic","Traditional Arabic","Segoe UI",Tahoma,serif;direction:rtl}
+.pw{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:12px}
+.pwc{border-radius:18px;padding:16px;text-align:center;background:var(--ink);color:#fff;cursor:pointer;border:3px solid transparent;transition:.2s}
+.pwc.on{border-color:var(--lem);transform:translateY(-3px)}
+.pwc .ar{font-size:30px;font-weight:800;color:var(--lem);line-height:1.5}
+.pwc small{display:block;opacity:.85;font-size:14px;margin-top:4px}
+.pwc b{display:block;font-size:15px;margin-top:6px}
+.pwedit{margin-top:14px;background:var(--cob2);border-radius:18px;padding:16px;display:none}
+.pwedit.show{display:block;animation:fade .3s}
+/* studio */
+.sbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.sbar button{border-radius:12px;padding:8px 12px;font-weight:800;font-size:14px;background:#EEF0F8;color:var(--ink);position:relative}
+.sbar button.on{background:var(--ink);color:#fff}
+.sbar button.ok::after{content:"✅";font-size:11px;margin-left:4px}
+.studio{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+@media(max-width:760px){.studio{grid-template-columns:1fr}}
+.ctl label{display:block;font-weight:900;font-size:13px;letter-spacing:1px;color:var(--muted);margin:10px 0 4px}
+.ctl input[type=text]{width:100%;border:2px solid var(--line);border-radius:12px;padding:9px 12px}
+.ctl input[type=text]:focus{outline:none;border-color:var(--cob)}
+.lay{display:flex;gap:6px;flex-wrap:wrap}
+.lay button{border-radius:10px;padding:6px 10px;font-weight:800;font-size:13px;background:#EEF0F8;color:var(--ink)}
+.lay button.on{background:var(--cob);color:#fff}
+.wc{font-size:12px;font-weight:800;margin-top:2px;color:var(--muted)}
+.wc.over{color:#D0234F}
+.bank{display:flex;flex-wrap:wrap;gap:5px;background:#EEF0F8;padding:8px;border-radius:12px;margin-top:6px;max-height:150px;overflow:auto}
+.bank button{font-size:22px;width:40px;height:40px;border-radius:10px;background:#fff}
+.pal{display:flex;gap:8px;flex-wrap:wrap}
+.pal button{display:flex;border-radius:10px;overflow:hidden;border:3px solid transparent;padding:0}
+.pal button.on{border-color:var(--ink)}
+.pal button i{width:22px;height:26px;display:block}
+.checks{display:grid;gap:6px;margin-top:12px}
+.checks div{font-size:14px;font-weight:700;padding:6px 10px;border-radius:10px;background:#F3F4FA}
+.checks div.ok{background:var(--ok2);color:#0B5C3B}
+.lmeter{margin-top:10px}
+.sv{position:relative}
+.sv .tagel{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 8px;border-radius:99px;z-index:2}
+.ms .num{font-size:clamp(46px,10vw,96px);font-weight:900;line-height:1}
+.ms .arw{font-size:clamp(34px,7vw,64px);font-weight:800;line-height:1.3}
+.ms .bigword{font-size:clamp(30px,7vw,66px);font-weight:900;letter-spacing:1px;line-height:1.05;padding:0 6%}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr));gap:10px}
+.gallery .ms .big{font-size:42px}.gallery .ms .cap{font-size:14px}.gallery .ms .num{font-size:40px}.gallery .ms .arw{font-size:28px}.gallery .ms .bigword{font-size:24px}
+.lvl{display:flex;gap:6px}
+.lvl button{border-radius:10px;padding:6px 10px;background:#EEF0F8;font-weight:800;font-size:14px}
+.lvl button.on{background:var(--ok);color:#fff}
+.coach .it{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700;margin-bottom:8px}
+.stars{display:flex;gap:6px}
+.stars button{font-size:30px;background:none;filter:grayscale(1);opacity:.4}
+.stars button.on{filter:none;opacity:1}
+.self{display:grid;gap:12px}
+.self .it{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700}
+.qn{font-weight:900;color:var(--cob);font-size:14px;letter-spacing:1px}
+.qq{font-size:19px;font-weight:800;margin:6px 0 4px}
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.gc{height:120px;perspective:800px;cursor:pointer}
+.gc .in{position:relative;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.gc.on .in{transform:rotateY(180deg)}
+.gc .f,.gc .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+.gc .f{background:#fff;border:2px solid var(--line);font-weight:900;font-size:17px}
+.gc .f .big{font-size:28px}
+.gc .b{background:var(--ink);color:#fff;transform:rotateY(180deg);font-size:14px}
+.gc .b .arx{font-size:22px;color:var(--lem);font-weight:800;direction:rtl;margin-bottom:4px}
+.modal{position:fixed;inset:0;background:rgba(21,26,51,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:22px;max-width:760px;width:100%;max-height:88vh;overflow:auto;padding:22px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.badge{flex:1 1 120px;border-radius:16px;padding:12px;text-align:center;background:#EEF0F8;filter:grayscale(1);opacity:.5;font-weight:800;font-size:13px}
+.badge .big{font-size:34px;display:block}
+.badge.on{filter:none;opacity:1;background:linear-gradient(135deg,var(--lem),var(--rose2))}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-weight:800;z-index:200;transition:transform .35s;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:92vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:150}
+footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 16px 40px;font-weight:600}
+@media(max-width:640px){.tbtn .lbl{display:none}.tbtn{padding:7px 10px}.logo small{display:none}.hero .tiles{opacity:.25}}
+#printCard,#cert{display:none}
+@media print{@page{size:A4;margin:12mm}body{background:#fff;font-size:12pt}body > *:not(.printing){display:none !important}.printing{display:block !important}.pc{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+.pc{font-family:"Segoe UI",Arial,sans-serif;color:#151A33}
+.pc .ph{background:#151A33;color:#fff;border-radius:14px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.pc .ph h1{font-size:24px}
+.pc .sb{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.pc .sbi{border:2px solid #DFE2F2;border-radius:12px;padding:8px;break-inside:avoid}
+.pc .sbi b{display:block;font-size:11px;letter-spacing:1.2px;color:#2541B2;text-transform:uppercase;margin-bottom:4px}
+.pc .sbi small{display:block;font-size:10px;color:#5D6280;margin-top:4px}
+.pc .ms .big{font-size:44px}.pc .ms .cap{font-size:15px}.pc .ms .num{font-size:44px}.pc .ms .arw{font-size:30px}.pc .ms .bigword{font-size:26px}
+.pc .pb{border:2px solid #DFE2F2;border-radius:12px;padding:9px 12px;margin-top:10px}
+.pc .pb b{display:block;font-size:11px;letter-spacing:1.2px;color:#2541B2;text-transform:uppercase}
+.certin{border:10px solid #2541B2;border-radius:20px;padding:40px;text-align:center;outline:4px solid #FFE45E;outline-offset:-24px}
+.certin h1{font-size:42px}
+.certin .nm{font-size:36px;font-weight:900;color:#FF6392;margin:14px 0;border-bottom:3px dashed #FFE45E;display:inline-block;padding:0 30px 6px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="logo"><div class="frame">🖼️</div><div>SLIDE STUDIO<small>TED TALK SERIES · APP 5</small></div></div>
+    <div class="spacer"></div>
+    <div class="pts" id="pts">🎨 0 pts</div>
+    <button class="tbtn" onclick="openModal('mBadges')">🏅<span class="lbl"> Badges</span></button>
+    <button class="tbtn" onclick="openModal('mGloss')">📖<span class="lbl"> Glossary</span></button>
+    <button class="tbtn" onclick="saveJSON()">💾<span class="lbl"> Save</span></button>
+    <label class="tbtn" style="cursor:pointer">📂<span class="lbl"> Load</span><input type="file" accept=".json" hidden onchange="loadJSON(event)"></label>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<section class="hero" id="hero">
+  <div class="tiles"><i style="background:#FFE45E"></i><i style="background:#FF6392"></i><i style="background:#fff"></i><i style="background:#151A33"></i><i style="background:#FFE45E"></i><i style="background:#FF6392"></i><i style="background:#fff"></i><i style="background:#FFE45E"></i><i style="background:#151A33"></i></div>
+  <div class="wrap">
+    <h1>Slides that <span>speak.</span></h1>
+    <p>Your slides don't need many words. One picture, one word, one number can say <b>everything</b>. Today you'll design slides that make people listen.</p>
+    <div class="namebox"><input id="sname" placeholder="Type your name" maxlength="40" oninput="S.name=this.value"><button class="btn lem" onclick="startApp()">Let's go ➜</button></div>
+    <div class="loadhint">Did App 3? <label>📂 Load your Backbone JSON<input type="file" accept=".json" hidden onchange="loadJSON(event)"></label> and your hook and points come with you.</div>
+  </div>
+</section>
+
+<main class="wrap" id="main">
+<!-- ENGAGE -->
+<section class="phase on" data-p="0">
+  <div class="phead"><div class="pnum" style="background:var(--lem)">⚡</div><div><h2>Engage: Which slide makes you listen?</h2><p>Your eyes decide in seconds.</p></div></div>
+  <div class="card objectives"><h3><span class="em">🎯</span> Lesson objectives</h3><p style="font-weight:700">By the end of this lesson, you will…</p>
+    <ul><li>identify different types of visual elements (images, words, colour, numbers, icons)</li><li>explain how visuals support key ideas and emotions</li><li>use visuals effectively without overloading your slides</li><li>design your own TED slides with your pictures and powerful words</li></ul></div>
+  <div class="card"><h3><span class="em">👀</span> Slide A or slide B?</h3><p class="hint">Same topic: a torch for camping. Which slide makes you want to listen?</p>
+    <div class="vs" id="abBox"></div><div class="fb" id="abFb"></div></div>
+  <div class="card"><h3><span class="em">💭</span> What does this picture say?</h3><p class="hint">No words on the slide. What idea does the picture give you? Tap one.</p>
+    <div class="progress"><div id="scBar"></div></div><div id="scBox"></div><div class="fb" id="scFb"></div></div>
+  <div class="card"><h3><span class="em">🤔</span> What do I want to learn today?</h3><p class="hint">Tap 1 or 2 questions.</p><div class="row" id="wants"></div></div>
+  <div class="next"><button class="btn" onclick="finishPhase(0)">Next: Explore ➜</button></div>
+</section>
+
+<!-- EXPLORE -->
+<section class="phase" data-p="1">
+  <div class="phead"><div class="pnum" style="background:var(--rose)">🔍</div><div><h2>Explore: Do visuals always mean pictures?</h2><p>No! Look at these five types.</p></div></div>
+  <div class="card"><h3><span class="em">🧩</span> 5 types of visual elements</h3>
+    <div class="types">
+      <div class="ty" style="background:var(--cob)"><span class="big">🖼️</span>Image / photo</div>
+      <div class="ty" style="background:var(--rose)"><span class="big">🔤</span>Big word</div>
+      <div class="ty" style="background:#E0A800"><span class="big">🔢</span>Big number</div>
+      <div class="ty" style="background:var(--ink)"><span class="big">⭐</span>Icon + few words</div>
+      <div class="ty" style="background:#1FA971"><span class="big">🎨</span>Colour & contrast</div>
+    </div>
+    <h4 style="margin:18px 0 6px;font-weight:900">Sort it: which type is this slide?</h4>
+    <div class="progress"><div id="sortBar"></div></div><div id="sortSlide" style="max-width:520px;margin:0 auto"></div>
+    <div class="tbins" id="tbins"></div><div class="fb" id="sortFb"></div></div>
+  <div class="card"><h3><span class="em">🩺</span> Slide doctor</h3><p class="hint">This slide is sick! Tap the fixes one by one and watch the Listen-o-meter.</p>
+    <div class="grid2"><div><div class="docslide" id="doc"></div><div class="lmeter"><div class="meter"><i id="docM"></i></div><div class="meterlab"><span>😴 nobody listens</span><span>🤩 everyone listens</span></div></div></div>
+    <div class="fixes" id="fixes"></div></div><div class="fb" id="docFb"></div></div>
+  <div class="next"><button class="btn" onclick="finishPhase(1)">Next: Explain ➜</button></div>
+</section>
+
+<!-- EXPLAIN -->
+<section class="phase" data-p="2">
+  <div class="phead"><div class="pnum" style="background:var(--cob);color:#fff">💡</div><div><h2>Explain: Why visuals matter</h2><p>…and 5 tips for great slides.</p></div></div>
+  <div class="card"><h3><span class="em">🧠</span> Visuals help your audience…</h3>
+    <div class="why3"><div><span class="big">👀</span>pay attention</div><div><span class="big">🧠</span>remember</div><div><span class="big">❤️</span>feel something</div></div></div>
+  <div class="card"><h3><span class="em">📌</span> 5 tips: tap each one</h3><div class="tips" id="tips"></div></div>
+  <div class="card"><h3><span class="em">✨</span> Idea → picture: inspiration from Arabic</h3>
+    <p class="hint">Great slides start with an <b>idea</b>, then find a <b>picture</b> that shows it. Here are some powerful Arabic proverbs and words. Choose the picture that shows each idea best.</p>
+    <div class="progress"><div id="pwBar"></div></div>
+    <div id="pw"></div>
+    <div class="pwedit" id="pwEdit"></div>
+    <div class="fb info show" style="margin-top:12px">💡 Your talk is in English, but an Arabic word can be a beautiful <b>design element</b> next to its English meaning. Ask your teacher before you use one in your final slides.</div></div>
+  <div class="card"><h3><span class="em">🎯</span> Tip or trap?</h3><p class="hint">Is this a good idea for a TED slide?</p>
+    <div class="progress"><div id="ttBar"></div></div><div class="qq" id="ttQ" style="text-align:center;min-height:60px"></div>
+    <div class="row" style="justify-content:center"><button class="btn" style="background:var(--ok);box-shadow:0 4px 0 #13804F" onclick="ttAns(1)">👍 Tip</button><button class="btn rose" onclick="ttAns(0)">🪤 Trap</button></div><div class="fb" id="ttFb"></div></div>
+  <div class="next"><button class="btn" onclick="finishPhase(2)">Next: Extend ➜</button></div>
+</section>
+
+<!-- EXTEND -->
+<section class="phase" data-p="3">
+  <div class="phead"><div class="pnum" style="background:var(--ink);color:#fff">🚀</div><div><h2>Extend: My slide studio</h2><p>Five slides. Five elements. Your pictures.</p></div></div>
+  <div class="card"><h3><span class="em">🎨</span> Step 1: Choose ONE colour theme for all slides</h3><p class="hint">Tip 4: stick to one theme. It looks professional.</p><div class="pal" id="pal"></div></div>
+  <div class="card"><h3><span class="em">🖌️</span> Step 2: Design your 5 slides</h3>
+    <p class="hint">One slide for each element your PowerPoint needs. Choose a layout, add <b>your own photo</b> or an emoji, and use <b>6 words or fewer</b>.</p>
+    <div class="sbar" id="sbar"></div>
+    <div class="studio"><div class="sv" id="sview"></div><div class="ctl" id="sctl"></div></div></div>
+  <div class="card"><h3><span class="em">🖼️</span> Step 3: My gallery</h3><p class="hint">All five slides together. Do they look like one team?</p><div class="gallery" id="gallery"></div></div>
+  <div class="card coach"><h3><span class="em">🚶</span> Step 4: Gallery walk</h3><p class="hint">Show your partner your gallery. They rate it.</p><div id="coach"></div>
+    <input class="chip" style="display:block;width:100%;margin-top:6px" id="ctip" placeholder="Partner's top tip (one short idea)" oninput="S.coachTip=this.value"></div>
+  <div class="next"><button class="btn" onclick="finishPhase(3)">Next: Evaluate ➜</button></div>
+</section>
+
+<!-- EVALUATE -->
+<section class="phase" data-p="4">
+  <div class="phead"><div class="pnum" style="background:var(--rose);color:#fff">🏆</div><div><h2>Evaluate: Check yourself</h2><p>Score 80% to unlock your certificate.</p></div></div>
+  <div class="card"><h3><span class="em">📝</span> Visuals quiz</h3><div id="quiz"></div></div>
+  <div class="card"><h3><span class="em">⭐</span> How confident am I?</h3><div class="self" id="selfc"></div></div>
+  <div class="card"><h3><span class="em">✅</span> What did I learn today?</h3><p class="hint">Tap the questions from Engage that you can now answer.</p><div class="row" id="learned"></div></div>
+  <div class="card" style="text-align:center"><h3 style="justify-content:center"><span class="em">🖨️</span> Finish & keep</h3>
+    <p class="hint">Print your Slide Storyboard: use it to build your PowerPoint in the HCT template.</p>
+    <div class="row" style="justify-content:center"><button class="btn" onclick="printCard()">🖨️ Print my Storyboard</button><button class="btn alt" onclick="saveJSON()">💾 Save JSON</button><button class="btn lem" id="certBtn" onclick="printCert()" disabled>🎓 Certificate (80%)</button></div></div>
+</section>
+</main>
+<footer>TED Talk Series · App 5 of 8 · LSC 1503 Professional Spoken Communication · HCT<br>Designed by: Nazila Motahari</footer>
+
+<div class="modal" id="mBadges" onclick="if(event.target===this)closeModal(this)"><div class="mbox"><h3 style="font-size:24px;font-weight:900">🏅 My badges</h3><div class="badges" id="badges"></div><div class="next"><button class="btn alt" onclick="closeModal(document.getElementById('mBadges'))">Close</button></div></div></div>
+<div class="modal" id="mGloss" onclick="if(event.target===this)closeModal(this)"><div class="mbox"><h3 style="font-size:24px;font-weight:900">📖 Glossary · المفردات</h3><p class="hint">Tap a card to see the Arabic and an example.</p><div class="gl" id="gloss"></div><div class="next" style="margin-top:12px"><button class="btn alt" onclick="closeModal(document.getElementById('mGloss'))">Close</button></div></div></div>
+<div id="printCard" class="pc"></div><div id="cert" class="pc"></div>
+<div class="toast" id="toast"></div><canvas id="confetti"></canvas>
+
+<script>
+const S={name:"",points:0,done:[false,false,false,false,false],awarded:{},ab:null,scene:[],wants:[],sortScore:0,fixes:[],tips:[],pwAns:[],tt:0,
+  theme:-1,slides:null,cur:0,coach:{},coachTip:"",quiz:null,quizScore:null,self:{},learned:[],topic:{title:"",idea:""},hook:"",prev:null};
+const PH=["Engage","Explore","Explain","Extend","Evaluate"],PHE=["⚡","🔍","💡","🚀","🏆"];
+const BADGES=[["👀","Sharp Eye"],["🩺","Slide Doctor"],["✨","Visual Thinker"],["🎨","Slide Designer"],["🏆","Visual Master"]];
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function words(s){return (s||"").trim().split(/\s+/).filter(Boolean).length}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200)}
+function addPts(n,msg){S.points+=n;$("pts").textContent="🎨 "+S.points+" pts";if(msg)toast(msg+"  +"+n)}
+function awardOnce(k,n,msg){if(S.awarded[k])return;S.awarded[k]=1;addPts(n,msg||"Nice!")}
+function openModal(id){if(id==="mBadges")renderBadges();$(id).classList.add("on")}
+function closeModal(m){m.classList.remove("on")}
+let cur=0;
+function renderTabs(){$("tabs").innerHTML=PH.map((p,i)=>`<button class="tab ${cur===i?"on":""} ${S.done[i]?"done":""}" onclick="go(${i})">${PHE[i]} ${p} <span class="ok">✅</span></button>`).join("")}
+function go(i){cur=i;document.querySelectorAll(".phase").forEach(s=>s.classList.toggle("on",+s.dataset.p===i));renderTabs();const y=$("main").getBoundingClientRect().top+scrollY-110;scrollTo({top:y,behavior:"smooth"});if(i===4){S.quiz?drawQuiz():buildQuiz()}if(i===3)renderStudio()}
+function startApp(){if(!S.name.trim()){toast("Type your name first 😊");$("sname").focus();return}awardOnce("start",5,"Welcome, "+S.name.trim()+"!");shrinkHero();go(0)}
+function shrinkHero(){const h=$("hero");h.classList.add("small");h.querySelector("h1").innerHTML=`${esc(S.name.trim())}, make your slides <span>speak.</span>`}
+function slideOK(s){if(!s)return false;const hasVis=s.img||s.e||(s.lay==="num"&&s.t.trim())||(s.lay==="word"&&s.t.trim())||(s.lay==="ar"&&s.ar.trim());return !!hasVis&&words(s.t)<=6&&(!s.img||!!s.src)}
+const phaseReq=[()=>(S.ab!==null&&S.scene.length>=SCENES.length)||"Choose slide A or B and finish 'What does this picture say?'.",
+  ()=>(!!S.awarded.sort&&S.fixes.length>=FIXES.length)||"Finish the sorting game and apply all the fixes.",
+  ()=>(S.tips.length>=5&&!!S.awarded.pwAll&&!!S.awarded.tt)||"Open all 5 tips, finish 'Idea → picture', and finish 'Tip or trap'.",
+  ()=>{if(S.theme<0)return "Choose a colour theme.";const bad=S.slides.findIndex(s=>!slideOK(s));if(bad>-1)return `Finish slide ${bad+1}: a picture or big word, 6 words or fewer, and a source for photos.`;return true}];
+function finishPhase(i){const r=phaseReq[i]();if(r!==true){toast("✋ "+r);return}if(!S.done[i]){S.done[i]=true;addPts(20,BADGES[i][0]+" Badge: "+BADGES[i][1]);confetti()}go(i+1)}
+function renderBadges(){$("badges").innerHTML=BADGES.map((b,i)=>`<div class="badge ${S.done[i]?"on":""}"><span class="big">${b[0]}</span>${b[1]}<br><small>${PH[i]}</small></div>`).join("")}
+
+/* ENGAGE */
+const TEXTSLIDE=`<div class="ms textslide"><h5>Practical Applications</h5><ul><li><b style="color:#C48BFF">Diffuse Tent Lighting:</b> Ensures a comfortable indoor environment with adjustable brightness.</li><li><b style="color:#C48BFF">Emergency Preparedness:</b> The strobe mode can be used for self-defense, enhancing safety in the wild.</li><li><b style="color:#C48BFF">Car Repairs:</b> Dual lighting modes offer optimal conditions for vehicle maintenance.</li></ul></div>`;
+const IMGSLIDE=`<div class="ms" style="background:#000"><div class="cap" style="font-size:clamp(20px,4vw,38px)">Are YOU prepared?</div><div class="big" style="margin-top:8px">🔦</div></div>`;
+function renderAB(){$("abBox").innerHTML=[["A",TEXTSLIDE,12],["B",IMGSLIDE,92]].map((x,i)=>`<div class="vcol ${S.ab!==null&&i===1?"win":""}">${x[1]}<div class="meter"><i style="width:${S.ab!==null?x[2]:0}%"></i></div><button class="btn ${S.ab===i?"lem":"ghost"} sm" onclick="pickAB(${i})">Slide ${x[0]} makes me listen</button></div>`).join("")}
+function pickAB(i){const first=S.ab===null;S.ab=i;renderAB();const fb=$("abFb");fb.className="fb show "+(i===1?"good":"info");
+  fb.innerHTML=(i===1?"🎉 Most people choose B! ":"Interesting! Most people choose B. ")+"Slide A has 40+ words: we <b>read</b> instead of <b>listening</b>. Slide B has 3 words and one strong image: we look, feel curious, and then listen to the speaker.";if(first)addPts(10)}
+const SCENES=[{bg:"linear-gradient(180deg,#FDB46A,#F26B6B 55%,#5A3A6E)",e:"🧍‍♂️⛰️",o:["Vision, goals and achievement","Cold weather in winter","Tourism in the mountains"],a:0,tag:"a person on a mountain top"},
+ {bg:"linear-gradient(180deg,#F7D9A8,#C98B4A)",e:"💧",o:["Small actions, big impact","Save water at home","A rainy day"],a:0,tag:"one drop making ripples"},
+ {bg:"linear-gradient(180deg,#2E5E3A,#7FB069)",e:"🛤️",o:["My life journey: one step at a time","A map of a forest","Walking is healthy"],a:0,tag:"a winding path"},
+ {bg:"linear-gradient(180deg,#0E1A3A,#2B3E7A)",e:"🕯️",o:["Hope in hard times","The electricity went off","Candles are cheap"],a:0,tag:"one light in the dark"}];
+const SC_ORD=SCENES.map(s=>shuffle([0,1,2]));let sci=0;
+function drawScene(){$("scBar").style.width=(Math.min(sci,SCENES.length)/SCENES.length*100)+"%";if(sci>=SCENES.length){$("scBox").innerHTML=`<div class="qq" style="text-align:center">🎉 One picture = one big idea!</div>`;return}
+  const s=SCENES[sci];$("scBox").innerHTML=`<div class="scene" style="background:${s.bg}">${s.e}<small>${s.tag}</small></div><div class="opts" style="margin-top:10px">${SC_ORD[sci].map(k=>`<button class="opt" onclick="scAns(this,${k})">${s.o[k]}</button>`).join("")}</div>`}
+function scAns(b,k){const s=SCENES[sci];document.querySelectorAll("#scBox .opt").forEach((x,j)=>{x.disabled=true;if(SC_ORD[sci][j]===s.a)x.classList.add("right")});const ok=k===s.a;if(!ok)b.classList.add("wrong");S.scene[sci]=ok;addPts(ok?5:1);
+  const fb=$("scFb");fb.className="fb show "+(ok?"good":"info");fb.innerHTML=ok?"✅ Yes! The picture says the idea, so the slide needs almost no words.":"🤔 Other answers are possible, but TED speakers use pictures like this for a <b>big idea</b>, not just facts.";
+  setTimeout(()=>{sci++;drawScene();if(sci>=SCENES.length){fb.className="fb info show";fb.innerHTML="💡 A strong picture carries a <b>feeling</b> and an <b>idea</b>. Your words come from your mouth, not the slide.";awardOnce("scenes",10,"Sharp eye!")}},1500)}
+const WANTS=["How many words on a slide?","Where can I find good pictures?","Can I use my own photos?","Can I use AI images?","How do I choose colours?","Do visuals always mean pictures?"];
+function renderWants(){$("wants").innerHTML=WANTS.map((w,i)=>`<button class="chip ${S.wants.includes(i)?"on":""}" onclick="tapWant(${i})">${w}</button>`).join("")}
+function tapWant(i){const k=S.wants.indexOf(i);k>-1?S.wants.splice(k,1):S.wants.length<2?S.wants.push(i):toast("Pick up to 2");renderWants();renderLearned();if(S.wants.length)awardOnce("wants",5,"Great question")}
+
+/* EXPLORE */
+const TYPES=[["🖼️","Image","#2541B2"],["🔤","Big word","#FF6392"],["🔢","Big number","#E0A800"],["⭐","Icon + words","#151A33"],["🎨","Colour","#1FA971"]];
+const SORT=shuffle([{h:`<div class="ms" style="background:#111"><div class="bigword">RISE.</div></div>`,a:1},{h:`<div class="ms" style="background:linear-gradient(135deg,#F7B267,#F4845F)"><div class="big">🐪🏜️</div></div>`,a:0},
+ {h:`<div class="ms" style="background:#2541B2"><div class="num">3 hours</div><div class="cap">waiting for my falcon</div></div>`,a:2},{h:`<div class="ms" style="background:#fff;color:#151A33"><div class="big">🤝</div><div class="cap">Teams need a plan</div></div>`,a:3},
+ {h:`<div class="ms" style="background:linear-gradient(90deg,#151A33 50%,#FFE45E 50%)"><div class="cap" style="color:#fff;mix-blend-mode:difference">Before | After</div></div>`,a:4},{h:`<div class="ms" style="background:#7FB2A6"><div class="bigword" style="font-family:Georgia,serif">KINDNESS IS CONTAGIOUS</div></div>`,a:1},
+ {h:`<div class="ms" style="background:#FF6392"><div class="num">300</div><div class="cap">strangers at iftar</div></div>`,a:2}]);
+let si=0;
+function renderBins(){$("tbins").innerHTML=TYPES.map((t,i)=>`<button style="background:${t[2]}" onclick="sortAns(${i})"><span>${t[0]}</span>${t[1]}</button>`).join("")}
+function drawSort(){$("sortBar").style.width=(si/SORT.length*100)+"%";if(si>=SORT.length){$("sortSlide").innerHTML=`<div class="qq" style="text-align:center">🎉 ${S.sortScore} / ${SORT.length} correct!</div>`;awardOnce("sort",10,"Type spotter!");return}$("sortSlide").innerHTML=SORT[si].h}
+function sortAns(k){if(si>=SORT.length)return;const ok=SORT[si].a===k,fb=$("sortFb");if(ok){S.sortScore++;addPts(2)}fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=ok?"✅ Correct!":`❌ This one is mainly a <b>${TYPES[SORT[si].a][0]} ${TYPES[SORT[si].a][1]}</b> slide.`;si++;drawSort()}
+const FIXES=[["✂️","Cut the text to 6 words"],["🖼️","Add one big, clear picture"],["🔠","Use one big, simple font"],["🌓","Make the contrast strong"],["🎨","Use the colour theme"]];
+function renderDoc(){const f=S.fixes,has=i=>f.includes(i);
+  const bg=has(4)?"linear-gradient(135deg,#2541B2,#151A33)":has(3)?"#1d1d1d":"#C9C9C9",col=has(3)||has(4)?"#fff":"#B5B5B5",font=has(2)?'"Segoe UI",Arial,sans-serif':'"Comic Sans MS","Brush Script MT",cursive';
+  const txt=has(0)?`<div style="font-size:clamp(16px,2.8vw,28px);font-weight:900;width:100%;text-align:center">Small habits change everything.</div>`:`<div style="font-size:clamp(8px,1.25vw,12px);text-align:left">Recycling is a process in which waste materials are collected, sorted and converted into new products. There are many benefits of recycling such as reducing landfill, saving energy, conserving natural resources and also protecting wildlife. Everybody should recycle in their home, school and workplace every single day for the future of the planet and next generations.</div>`;
+  $("doc").innerHTML=`<div style="position:absolute;inset:0;background:${bg};color:${col};font-family:${font};display:flex;flex-direction:${has(1)?"column":"row"};align-items:center;justify-content:center;gap:4%;padding:5%;text-align:center">${has(1)?`<div style="font-size:clamp(44px,8vw,84px);line-height:1;width:100%;text-align:center">🧕🥤</div>`:""}${txt}</div>`;
+  $("docM").style.width=(10+f.length*18)+"%";
+  $("fixes").innerHTML=FIXES.map((x,i)=>`<button class="fix ${has(i)?"on":""}" onclick="tapFix(${i})">${x[0]} ${x[1]}<span class="t">${has(i)?"✅":"➕"}</span></button>`).join("")}
+function tapFix(i){if(S.fixes.includes(i))return;S.fixes.push(i);addPts(3);renderDoc();if(S.fixes.length>=FIXES.length){const fb=$("docFb");fb.className="fb good show";fb.innerHTML="🩺 Cured! Same message, but now people <b>look, feel and listen</b>. These five fixes are your checklist for every slide.";awardOnce("doc",10,"Slide doctor!")}}
+
+/* EXPLAIN */
+const TIPS=[["✂️","Keep it simple","One idea per slide. 6 words or fewer. Your voice tells the rest.","#2541B2"],["📷","High-quality, relevant images","Big, clear pictures that match YOUR story. Your own photos are the best.","#FF6392"],["🚫","Avoid too much text","If you put sentences on slides, people read and stop listening. And you might start reading too (60% cap!).","#E0A800"],["🎨","Stick to a colour theme","2–3 colours on every slide. It looks professional and organised.","#151A33"],["🎯","Visuals support your message","Every picture must help your idea. And reference it: own photo, copyright-free site, or 'AI image'.","#1FA971"]];
+function renderTips(){$("tips").innerHTML=TIPS.map((t,i)=>`<div class="tip ${S.tips.includes(i)?"on":""}" style="background:${t[3]};${i===2?"color:#151A33":""}" onclick="tapTip(${i})"><div class="big">${t[0]}</div><h4>${t[1]}</h4><p>${t[2]}</p>${S.tips.includes(i)?"":`<small style="opacity:.8;font-weight:700">tap to open</small>`}</div>`).join("")}
+function tapTip(i){if(!S.tips.includes(i)){S.tips.push(i);addPts(2)}renderTips();if(S.tips.length>=5)awardOnce("tips",10,"All 5 tips!")}
+const PW=[
+ {ar:"يد واحدة لا تصفّق",en:"One hand cannot clap",o:[["🤝","many hands together"],["✋","one hand alone"],["📱","a phone"]],a:0,why:"The idea is <b>teamwork</b>. Many hands together show it. One hand alone shows the problem, not the idea."},
+ {ar:"الصبر مفتاح الفرج",en:"Patience is the key to relief",o:[["🏃","someone running fast"],["🗝️","a key opening a door"],["🎉","a party"]],a:1,why:"The proverb already gives you a picture: a <b>key</b>. Patience opens the door."},
+ {ar:"الوقت كالسيف",en:"Time is like a sword",o:[["⚔️","two people fighting"],["🏖️","a relaxing beach"],["⏳","an hourglass running out"]],a:2,why:"Careful! Don't be too <b>literal</b>. The idea is <b>time</b>, not a fight. An hourglass shows time running out."},
+ {ar:"العلم نور",en:"Knowledge is light",o:[["📚","a book glowing with light"],["🌑","a dark night"],["📺","a TV screen"]],a:0,why:"A book with light joins the two words: <b>knowledge</b> + <b>light</b>."},
+ {ar:"من جدّ وجد",en:"Whoever works hard will find (success)",o:[["🛋️","relaxing on a sofa"],["🎁","a surprise gift"],["🧗","climbing to the top"]],a:2,why:"Climbing shows <b>effort</b> and the top shows <b>success</b>. A gift is luck, not hard work."},
+ {ar:"أمل",en:"Hope",o:[["🧱","a brick wall"],["🌅","a sunrise"],["🌧️","a storm"]],a:1,why:"A sunrise is a new beginning. One word + one picture can be a whole slide!"},
+ {ar:"لُطف",en:"Kindness",o:[["💰","a pile of money"],["🏆","a trophy"],["🤲","hands giving something"]],a:2,why:"Kindness is about <b>giving</b>, not winning or money."},
+ {ar:"طموح",en:"Ambition",o:[["🚀","a rocket taking off"],["🐢","a slow turtle"],["🛌","someone sleeping"]],a:0,why:"A rocket goes up and far: big dreams, big goals."}];
+let pwi=0;
+function renderPW(){if(!S.pwAns)S.pwAns=[];pwi=Math.min(S.pwAns.length,PW.length);
+  $("pwBar").style.width=(pwi/PW.length*100)+"%";
+  if(pwi>=PW.length){$("pw").innerHTML=`<div class="qq" style="text-align:center">🎉 ${S.pwAns.filter(Boolean).length} / ${PW.length}: you matched ideas to pictures!</div>`;$("pwEdit").className="pwedit show";
+    $("pwEdit").innerHTML=`<p style="font-weight:900;margin-bottom:8px">Your bilingual mini slides:</p><div class="gallery">${PW.map(p=>`<div class="ms" style="background:#151A33"><div class="big" style="font-size:40px">${p.o[p.a][0]}</div><div class="arw ar" style="color:#FFE45E;font-size:22px">${p.ar}</div><div class="cap" style="font-size:13px">${p.en}</div></div>`).join("")}</div>
+    <div class="fb info show">🔑 <b>The secret:</b> find the <b>idea</b> first, then a picture that <b>shows</b> it. Not too literal, and only a few words.</div>`;awardOnce("pwAll",10,"Idea → picture master!");return}
+  const p=PW[pwi];$("pwEdit").className="pwedit";
+  $("pw").innerHTML=`<div class="grid2"><div class="ms" style="background:#151A33"><div class="arw ar" style="color:#FFE45E">${p.ar}</div><div class="cap">“${p.en}”</div></div>
+   <div><p style="font-weight:900;margin-bottom:8px">Which picture shows this idea best?</p><div class="opts">${p.o.map((o,k)=>`<button class="opt" onclick="pwAns(this,${k})"><span style="font-size:28px;vertical-align:middle;margin-right:8px">${o[0]}</span>${o[1]}</button>`).join("")}</div><div class="fb" id="pwFb"></div></div></div>`}
+function pwAns(b,k){const p=PW[pwi];document.querySelectorAll("#pw .opt").forEach((x,j)=>{x.disabled=true;if(j===p.a)x.classList.add("right")});const ok=k===p.a;if(!ok)b.classList.add("wrong");addPts(ok?4:1);
+  const fb=$("pwFb");fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=(ok?"✅ ":"❌ ")+p.why;
+  const sv=document.querySelector("#pw .ms");sv.innerHTML=`<div class="big" style="font-size:clamp(40px,8vw,72px)">${p.o[p.a][0]}</div><div class="arw ar" style="color:#FFE45E;font-size:clamp(22px,4vw,36px)">${p.ar}</div><div class="cap">${p.en}</div>`;
+  setTimeout(()=>{S.pwAns.push(ok);renderPW()},2600)}
+const TT=shuffle([["Use your own photo from a family trip",1],["Copy a full paragraph from a website onto the slide",0],["Use 3 colours on every slide",1],["Use a picture from Google without checking if it's free",0],["Show one big number, like “300”",1],["Use 5 different fonts to look creative",0],["Label an AI-made picture as “AI image”",1],["Read every word on your slide to the audience",0]]);
+let tti=0;
+function drawTT(){$("ttBar").style.width=(tti/TT.length*100)+"%";if(tti>=TT.length){$("ttQ").textContent=`🎉 ${S.tt} / ${TT.length} correct!`;awardOnce("tt",10,"Tip expert!");return}$("ttQ").textContent="“"+TT[tti][0]+"”"}
+function ttAns(k){if(tti>=TT.length)return;const ok=TT[tti][1]===k,fb=$("ttFb");if(ok){S.tt++;addPts(2)}fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=ok?"✅ Correct!":(TT[tti][1]?"❌ This one is actually a good tip!":"❌ Careful, that's a trap!");tti++;drawTT()}
+
+/* EXTEND: studio */
+const THEMES=[["Gallery","#2541B2","#FFE45E","#FF6392","#151A33"],["Desert","#C8553D","#F28F3B","#FFD5C2","#2D1E2F"],["Ocean","#05668D","#02C39A","#F0F3BD","#012A36"],["Night","#151A33","#B8B8FF","#FFD6A5","#000000"]];
+const ELEM=[["🎣","Hook"],["1️⃣","Point 1"],["2️⃣","Point 2 · story"],["3️⃣","Point 3 · example"],["🏁","Ending"]];
+const LAYS=[["photo","🖼️ Picture + caption"],["word","🔤 Big word"],["num","🔢 Big number"],["icon","⭐ Icon + words"],["ar","✨ Arabic word + English"]];
+const BANK=["🦅","🐎","🐪","🏜️","🌴","🌊","☕","🍲","🕌","🏙️","🚗","✈️","📱","💻","🌱","♻️","💧","🌍","☀️","🌙","⏳","🔑","🧭","🎯","💡","🏆","💪","🧠","📚","🎓","🤝","🤲","👨‍👩‍👧","🧕","👴","👶","😊","🔥","❤️","📷","🧩","🚀","🛤️","⛰️","🕯️","🌅"];
+const SRC=["📸 My own photo","🆓 Copyright-free site","🤖 AI-made (labelled)"];
+function initSlides(){S.slides=ELEM.map((e,i)=>({lay:i===0?"photo":"icon",t:"",e:"",img:"",src:"",ref:"",ar:"",bgi:i%4}))}
+function themeCol(i){const t=THEMES[S.theme<0?0:S.theme];return [t[1],t[4],t[3],t[1]][i%4]}
+function slideHTML(s,i){if(!s)return"";const bg=themeCol(s.bgi),acc=THEMES[S.theme<0?0:S.theme][2],cap=esc(s.t);
+  if(s.img&&(s.lay==="photo"||s.lay==="icon"))return `<div class="ms photo" style="background-color:${bg};background-image:url(${s.img})"><div class="cap">${cap||"&nbsp;"}</div></div>`;
+  if(s.lay==="word")return `<div class="ms" style="background:${bg}"><div class="bigword" style="color:${acc}">${cap||"WORD."}</div></div>`;
+  if(s.lay==="num"){const m=(s.t||"").match(/^(\S+)\s*(.*)$/)||["","",""];return `<div class="ms" style="background:${bg}"><div class="num" style="color:${acc}">${esc(m[1])||"300"}</div><div class="cap">${esc(m[2])}</div></div>`}
+  if(s.lay==="ar")return `<div class="ms" style="background:${bg}"><div class="arw ar" style="color:${acc}">${esc(s.ar)||"أمل"}</div><div class="cap">${cap||"Hope."}</div></div>`;
+  return `<div class="ms" style="background:${bg}"><div class="big">${s.e||"➕"}</div><div class="cap">${cap||"&nbsp;"}</div></div>`}
+function renderPal(){$("pal").innerHTML=THEMES.map((t,i)=>`<button class="${S.theme===i?"on":""}" onclick="S.theme=${i};renderPal();renderStudio();awardOnce('theme',5,'Theme chosen')" title="${t[0]}">${t.slice(1).map(c=>`<i style="background:${c}"></i>`).join("")}</button>`).join("")+`<span class="hint" style="margin:0;align-self:center">${S.theme>-1?"Theme: <b>"+THEMES[S.theme][0]+"</b>":"Tap a palette"}</span>`}
+function renderStudio(){if(!S.slides)initSlides();const k=S.cur,s=S.slides[k];
+  $("sbar").innerHTML=ELEM.map((e,i)=>`<button class="${i===k?"on":""} ${slideOK(S.slides[i])?"ok":""}" onclick="S.cur=${i};renderStudio()">${e[0]} ${e[1]}</button>`).join("");
+  $("sview").innerHTML=`<span class="tagel">${ELEM[k][1].toUpperCase()}</span>${slideHTML(s,k)}`;
+  const ph=s.lay==="num"?"e.g. 300 strangers at iftar":s.lay==="word"?"e.g. RISE.":s.lay==="ar"?"English meaning, e.g. Hope.":k===0?"e.g. Gone":"e.g. Teams need a plan";
+  $("sctl").innerHTML=`<label>LAYOUT</label><div class="lay">${LAYS.map(l=>`<button class="${s.lay===l[0]?"on":""}" onclick="setL('lay','${l[0]}')">${l[1]}</button>`).join("")}</div>
+   ${s.lay==="ar"?`<label>ARABIC WORD OR PHRASE</label><input type="text" class="ar" value="${esc(s.ar)}" placeholder="أمل" oninput="setT('ar',this.value)">`:""}
+   <label>${s.lay==="num"?"NUMBER + A FEW WORDS":"WORDS"} (6 OR FEWER)</label><input type="text" maxlength="60" value="${esc(s.t)}" placeholder="${ph}" oninput="setT('t',this.value)"><div class="wc ${words(s.t)>6?"over":""}" id="swc">${words(s.t)} / 6 words</div>
+   ${s.lay==="photo"||s.lay==="icon"?`<label>PICTURE</label><div class="row"><label class="btn sm" style="cursor:pointer">📷 Upload my photo<input type="file" accept="image/*" hidden onchange="upImg(event)"></label>${s.img?`<button class="btn sm ghost" onclick="setL('img','');S.slides[S.cur].src=''">✖ Remove</button>`:""}</div>
+     ${s.img?`<label>WHERE IS IT FROM?</label><div class="row">${SRC.map(x=>`<button class="chip ${s.src===x?"on":""}" style="padding:5px 10px;font-size:13px" onclick="setL('src','${x}')">${x}</button>`).join("")}</div><input type="text" style="margin-top:6px" maxlength="80" value="${esc(s.ref)}" placeholder="Reference (e.g. Pixabay, my photo)" oninput="S.slides[S.cur].ref=this.value">`:`<div class="hint" style="margin:6px 0 0">…or tap an emoji:</div><div class="bank">${BANK.map(e=>`<button onclick="setL('e','${e}')">${e}</button>`).join("")}</div>`}`:""}
+   <label>BACKGROUND</label><div class="row">${[0,1,2,3].map(j=>`<button style="width:30px;height:30px;border-radius:50%;background:${themeCol(j)};border:3px solid ${s.bgi===j?"#151A33":"#fff"};box-shadow:0 0 0 2px var(--line)" onclick="setL('bgi',${j})"></button>`).join("")}</div>
+   <div class="checks">${[["Picture or big visual",s.img||s.e||((s.lay==="word"||s.lay==="num")&&s.t.trim())||(s.lay==="ar"&&s.ar.trim())],["6 words or fewer",words(s.t)<=6],["Source given (if photo)",!s.img||!!s.src],["Colour theme chosen",S.theme>-1]].map(c=>`<div class="${c[1]?"ok":""}">${c[1]?"✅":"⬜"} ${c[0]}</div>`).join("")}</div>`;
+  renderGallery()}
+function setL(f,v){S.slides[S.cur][f]=v;renderStudio();checkAll()}
+function setT(f,v){S.slides[S.cur][f]=v;$("sview").innerHTML=`<span class="tagel">${ELEM[S.cur][1].toUpperCase()}</span>${slideHTML(S.slides[S.cur],S.cur)}`;const n=words(S.slides[S.cur].t),w=$("swc");if(w){w.textContent=n+" / 6 words"+(n>6?" · too long ✂️":"");w.classList.toggle("over",n>6)}renderGallery();checkAll();
+  document.querySelectorAll("#sbar button").forEach((b,i)=>b.classList.toggle("ok",slideOK(S.slides[i])))}
+function checkAll(){if(S.slides&&S.slides.every(slideOK)&&S.theme>-1){awardOnce("all5",25,"🎨 Five slides designed!");}}
+function upImg(ev){const f=ev.target.files[0];ev.target.value="";if(!f||!f.type.startsWith("image/")){toast("Please choose an image file");return}const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const max=1100,sc=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);S.slides[S.cur].img=c.toDataURL("image/jpeg",.8);S.slides[S.cur].lay="photo";renderStudio();awardOnce("photo"+S.cur,10,"📷 Your own picture!")};im.onerror=()=>toast("Sorry, this picture can't be opened");im.src=r.result};r.readAsDataURL(f)}
+function renderGallery(){$("gallery").innerHTML=S.slides.map((s,i)=>`<div><div style="font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px">${ELEM[i][0]} ${ELEM[i][1].toUpperCase()}</div>${slideHTML(s,i)}</div>`).join("")}
+const COACH=["🎨 One colour theme","✂️ 6 words or fewer","🖼️ Big, clear visuals","🎯 Visuals match the message","🏷️ Pictures have sources"];
+function renderCoach(){$("coach").innerHTML=COACH.map((c,i)=>`<div class="it">${c}<div class="lvl">${["Not yet","Getting there","Yes!"].map((l,k)=>`<button class="${S.coach[i]===k?"on":""}" onclick="S.coach[${i}]=${k};renderCoach();if(Object.keys(S.coach).length>=5)awardOnce('coach',10,'Gallery walk done')">${l}</button>`).join("")}</div></div>`).join("");$("ctip").value=S.coachTip}
+
+/* EVALUATE */
+const QUIZ=[
+ {q:"Which slide will make the audience listen to YOU more?",o:["One strong photo and three words","Four bullet points with full sentences","A paragraph copied from a website","A table with twenty numbers"],a:0},
+ {q:"“Do visuals always mean pictures?”",o:["Yes, only photos count as visuals","No: big words, numbers, icons and colour too","Yes, and they must be cartoons","No, visuals are only videos"],a:1},
+ {q:"How many words should most TED slides have?",o:["As many as you need to explain","At least fifty for each point","About six or fewer","Exactly one hundred"],a:2},
+ {q:"Salem found a great photo on Google Images. What should he do?",o:["Use it, everything online is free","Make it small so nobody notices","Put it on every slide","Check it's copyright-free, or use his own"],a:3},
+ {q:"Why should you stick to one colour theme?",o:["It looks professional and organised","It makes the file size smaller","It is the only rule in the rubric","It means you don't need pictures"],a:0},
+ {q:"Fatima made a picture with an AI tool. What must she do?",o:["Say she took the photo herself","Label or reference it as an AI image","Delete it, AI is never allowed","Use it without saying anything"],a:1},
+ {q:"A picture of one drop of water making big ripples can show…",o:["how to save water at home","the weather forecast for today","small actions, big impact","a chemistry experiment"],a:2},
+ {q:"Why are slides full of text a problem for the SPEAKER too?",o:["The slides will be too colourful","The audience will clap too early","The talk will be too short","The speaker may start reading them (60% cap)"],a:3},
+ {q:"Hamad wants an Arabic proverb on his slide. What is a good way?",o:["Big Arabic words with a short English meaning","Write the full talk in Arabic on the slide","Use five proverbs on one slide","Translate it word for word in small text"],a:0},
+ {q:"Which slide supports the message “Teams need a plan”?",o:["A random photo of a beautiful beach","An icon of hands together and four words","A long list of team members' names","A chart of last year's weather"],a:1}];
+function buildQuiz(){S.quiz=shuffle(QUIZ.map((q,i)=>i)).map(i=>({i,ord:shuffle(QUIZ[i].o.map((_,k)=>k)),ans:null}));qi=0;S.quizScore=null;drawQuiz()}
+let qi=0;
+function drawQuiz(){const box=$("quiz");if(S.quizScore!==null&&qi>=S.quiz.length){const pct=Math.round(S.quizScore/QUIZ.length*100);
+  box.innerHTML=`<div style="text-align:center"><div style="font-size:60px">${pct>=80?"🏆":"💪"}</div><div class="qq">You scored ${S.quizScore}/${QUIZ.length} (${pct}%)</div><p class="hint">${pct>=80?"Amazing! Your certificate is unlocked.":"You need 80% for the certificate. Try again!"}</p><button class="btn ghost" onclick="buildQuiz()">🔁 Try again</button></div>`;
+  $("certBtn").disabled=pct<80;if(pct>=80){confetti();if(!S.done[4]){S.done[4]=true;addPts(20,"🏆 Badge: Visual Master");renderTabs()}}return}
+  const it=S.quiz[qi],Q=QUIZ[it.i];box.innerHTML=`<div class="progress"><div style="width:${qi/S.quiz.length*100}%"></div></div><div class="qn">QUESTION ${qi+1} OF ${S.quiz.length}</div><div class="qq">${Q.q}</div><div class="opts">${it.ord.map(k=>`<button class="opt" onclick="qAns(this,${k})">${Q.o[k]}</button>`).join("")}</div>`}
+function qAns(b,k){const it=S.quiz[qi],Q=QUIZ[it.i];if(it.ans!==null)return;it.ans=k;document.querySelectorAll("#quiz .opt").forEach((x,j)=>{x.disabled=true;if(it.ord[j]===Q.a)x.classList.add("right")});if(k===Q.a)addPts(5);else b.classList.add("wrong");
+  setTimeout(()=>{qi++;if(qi>=S.quiz.length)S.quizScore=S.quiz.filter(x=>x.ans===QUIZ[x.i].a).length;drawQuiz()},1000)}
+const SELF=["I can name 5 types of visual elements","I can explain how visuals help the audience","I can design a slide with 6 words or fewer","I can choose and reference good images"];
+function renderSelf(){$("selfc").innerHTML=SELF.map((s,i)=>`<div class="it">${s}<div class="stars">${[1,2,3,4,5].map(n=>`<button class="${(S.self[i]||0)>=n?"on":""}" onclick="S.self[${i}]=${n};renderSelf();awardOnce('self${i}',2)">⭐</button>`).join("")}</div></div>`).join("")}
+function renderLearned(){const list=S.wants.length?S.wants:[0,5];$("learned").innerHTML=list.map(i=>`<button class="chip ${S.learned.includes(i)?"on":""}" onclick="tapLearned(${i})">✅ ${WANTS[i]}</button>`).join("")}
+function tapLearned(i){const k=S.learned.indexOf(i);k>-1?S.learned.splice(k,1):S.learned.push(i);renderLearned();awardOnce("learned",5,"Reflection done")}
+const GLOSS=[["🖼️","visual","عنصر مرئي","A visual helps people remember."],["📷","image","صورة","Use a high-quality image."],["🎨","colour theme","نظام ألوان","Stick to one colour theme."],["🌓","contrast","تباين","Strong contrast is easy to read."],["🔤","font","خط","Use one big, simple font."],["⭐","icon","أيقونة","An icon can replace words."],["🏷️","caption","تعليق على الصورة","Write a short caption."],["🆓","copyright-free","خالٍ من حقوق النشر","Use copyright-free pictures."],["📚","reference","مرجع","Add a reference for each image."],["📐","layout","تخطيط / تصميم الصفحة","Choose a simple layout."],["✂️","minimal","قليل / بسيط","Keep the text minimal."],["❤️","emotion","عاطفة / شعور","A picture can show emotion."],["🎯","relevant","ذو صلة","Use relevant images only."],["🧠","memorable","لا يُنسى","Big pictures are memorable."]];
+function renderGloss(){$("gloss").innerHTML=GLOSS.map(g=>`<div class="gc" onclick="this.classList.toggle('on');awardOnce('gl_${g[1]}',1)"><div class="in"><div class="f"><div class="big">${g[0]}</div>${g[1]}</div><div class="b"><div class="arx">${g[2]}</div>${g[3]}</div></div></div>`).join("")}
+
+function printCard(){if(!S.slides)initSlides();
+  $("printCard").innerHTML=`<div class="ph"><div><h1>🖼️ My Slide Storyboard</h1><div style="opacity:.8">TED Talk Series · App 5 · LSC 1503 · ${esc(S.name)} · ${new Date().toLocaleDateString("en-GB")}</div></div><div style="font-size:26px">🎨</div></div>
+  <div class="pb"><b>Title · Theme</b>${esc(S.topic.title)||"&nbsp;"} · ${S.theme>-1?THEMES[S.theme][0]:"no theme yet"}</div>
+  <div class="sb">${S.slides.map((s,i)=>`<div class="sbi"><b>${ELEM[i][0]} ${ELEM[i][1]}</b>${slideHTML(s,i)}${s.img?`<small>Picture: ${esc(s.src)}${s.ref?" · "+esc(s.ref):""}</small>`:""}</div>`).join("")}
+  <div class="sbi"><b>Partner gallery walk</b>${COACH.map((c,i)=>`${c}: <strong>${S.coach[i]!==undefined?["Not yet","Getting there","Yes!"][S.coach[i]]:"–"}</strong>`).join("<br>")}<br><br><b>Top tip</b>${esc(S.coachTip)||"–"}<br><br><b>Quiz · Points</b>${S.quizScore!==null?S.quizScore+"/"+QUIZ.length:"not yet"} · 🎨 ${S.points} pts</div></div>
+  <p style="text-align:center;font-size:11px;margin-top:10px;color:#5D6280">Build these slides in the HCT template · Designed by: Nazila Motahari · HCT</p>`;doPrint("printCard");awardOnce("print",5,"Storyboard ready")}
+function printCert(){$("cert").innerHTML=`<div class="certin"><div style="font-size:60px">🖼️</div><div style="letter-spacing:3px;font-weight:800;color:#5D6280">CERTIFICATE OF ACHIEVEMENT</div><h1>Slide Studio</h1><p style="margin-top:10px">This certifies that</p><div class="nm">${esc(S.name)||"Student"}</div><p>can design TED slides that speak:<br>strong visuals, few words, one colour theme.</p><p style="margin-top:14px;font-weight:800">Quiz score: ${S.quizScore}/${QUIZ.length} · ${new Date().toLocaleDateString("en-GB")}</p><div style="font-size:30px;margin-top:14px">${BADGES.map((b,i)=>S.done[i]?b[0]:"").join(" ")}</div><p style="margin-top:20px;font-size:13px;color:#5D6280">TED Talk Series · App 5 · LSC 1503 Professional Spoken Communication · HCT<br>Designed by: Nazila Motahari</p></div>`;doPrint("cert")}
+function doPrint(id){const el=$(id);el.classList.add("printing");setTimeout(()=>{window.print();el.classList.remove("printing")},150)}
+function saveJSON(){const data=Object.assign({app:"TED-App5-SlidesThatSpeak",version:1,saved:new Date().toISOString()},S);const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"}));a.download=`TED5_Slides_${(S.name||"student").replace(/\W+/g,"_")}.json`;a.click();toast("💾 Saved!")}
+function loadJSON(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);
+  if(d.app==="TED-App5-SlidesThatSpeak"){Object.keys(S).forEach(k=>{if(d[k]!==undefined)S[k]=d[k]});$("sname").value=S.name;renderAll();if(S.name.trim())shrinkHero();toast("📂 Welcome back, "+(S.name||"")+"!");return}
+  if(!S.slides)initSlides();
+  if(d.app==="TED-App3-Backbone"){S.topic=d.topic||S.topic;S.hook=d.hook||"";(d.pts||[]).forEach((p,i)=>{const sl=S.slides[i+1];if(!sl)return;sl.e=sl.e||p.e||"";sl.t=sl.t||p.p||""});
+    if(d.carry&&d.carry.app2&&d.carry.app2.slide){const h=d.carry.app2.slide,sl=S.slides[0];sl.e=h.e||"";sl.t=h.c||"";if(h.img){sl.img=h.img;sl.src=h.src||"";sl.ref=h.ref||""}}
+    if(d.ending&&d.ending.t)S.slides[4].t=S.slides[4].t||"";}
+  else if(d.app==="TED-App2-HookThem"){S.topic={title:d.topic&&d.topic.title||"",idea:d.topic&&d.topic.idea||""};const h=d.slide||{},sl=S.slides[0];sl.e=h.e||"";sl.t=h.c||"";if(h.img){sl.img=h.img;sl.src=h.src||"";sl.ref=h.ref||""}}
+  else if(/^TED-App\d/.test(d.app||"")){S.topic=d.topic||S.topic}
+  else throw 0;
+  S.name=d.name||S.name;S.prev=d.app;$("sname").value=S.name;renderAll();if(S.name.trim()){awardOnce("start",5);awardOnce("import",10,"📂 Your work is loaded!");shrinkHero()}}
+  catch(e){toast("❌ This is not a TED Talk Studio JSON file")}};r.readAsText(f);ev.target.value=""}
+function confetti(){const c=$("confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;const cols=["#2541B2","#FFE45E","#FF6392","#1FA971","#FFFFFF"],P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*6,c:cols[Math.random()*5|0],vy:2+Math.random()*3,vx:-1.5+Math.random()*3,a:Math.random()*6}));
+  let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);x.restore()});if(++t<170)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
+function renderAll(){$("pts").textContent="🎨 "+S.points+" pts";if(!S.slides)initSlides();renderTabs();renderAB();sci=S.scene.length;drawScene();renderWants();renderBins();drawSort();renderDoc();renderTips();renderPW();drawTT();renderPal();renderStudio();renderCoach();renderSelf();renderLearned();renderGloss();if(S.quiz&&S.quizScore!==null){qi=S.quiz.length;drawQuiz()}}
+renderAll();
+</script>
+</body>
+</html>
