@@ -197,6 +197,14 @@ main{padding:28px 0 60px}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:99px;font-weight:800;z-index:200;transition:transform .35s;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:92vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:150}
+.tmpl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:640px){.tmpl{grid-template-columns:1fr}}
+.tslide{aspect-ratio:16/9;border-radius:12px;color:#fff;padding:10px 12px;display:flex;flex-direction:column;justify-content:center}
+.tslide small{font-size:10px;font-weight:900;letter-spacing:1.2px;opacity:.8}.tslide b{font-size:18px;margin:2px 0}.tslide span{font-size:12px;opacity:.85}
+.trules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:8px}
+.tr{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 12px;font-size:15px}
+.tr .ic{font-size:22px;flex:none}.tr b{display:block}.tr span{color:var(--muted);font-size:14px}
+.tr.on{border-color:var(--ok);background:var(--ok2)}
 footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 16px 40px;font-weight:600}
 @media(max-width:640px){.tbtn .lbl{display:none}.tbtn{padding:7px 10px}.logo small{display:none}.hero .tiles{opacity:.25}}
 #printCard,#cert{display:none}
@@ -280,6 +288,12 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 16px 40p
   <div class="card"><h3><span class="em">🧠</span> Visuals help your audience…</h3>
     <div class="why3"><div><span class="big">👀</span>pay attention</div><div><span class="big">🧠</span>remember</div><div><span class="big">❤️</span>feel something</div></div></div>
   <div class="card"><h3><span class="em">📌</span> 5 tips: tap each one</h3><div class="tips" id="tips"></div></div>
+  <div class="card"><h3><span class="em">📐</span> The HCT template rules</h3>
+    <p class="hint">Your PowerPoint must use the <b>HCT Final Practical template</b> on Blackboard. Here's what it asks for. Tap each rule when you understand it.</p>
+    <div class="tmpl"><div class="tslide" style="background:linear-gradient(135deg,#3C3FB4,#2B2E8F)"><small>FIRST SLIDE (template)</small><b>Name of Project</b><span>Student Name · H00… · College and Campus · Name of Teacher</span></div>
+    <div class="tslide" style="background:#fff;color:#151A33;border:2px dashed #C9CCE6"><small style="color:#5D6280">YOUR 5 SLIDES</small><b>Hook · 3 points · Ending</b><span>your design, inside the template</span></div>
+    <div class="tslide" style="background:linear-gradient(135deg,#3C3FB4,#2B2E8F)"><small>LAST SLIDE (template)</small><b>Any Questions?</b><span>after your ending and “Thank you”</span></div></div>
+    <div class="trules" id="trules"></div></div>
   <div class="card"><h3><span class="em">✨</span> Idea → picture: inspiration from Arabic</h3>
     <p class="hint">Great slides start with an <b>idea</b>, then find a <b>picture</b> that shows it. Here are some powerful Arabic proverbs and words. Choose the picture that shows each idea best.</p>
     <div class="progress"><div id="pwBar"></div></div>
@@ -300,7 +314,7 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 16px 40p
     <p class="hint">One slide for each element your PowerPoint needs. Choose a layout, add <b>your own photo</b> or an emoji, and use <b>6 words or fewer</b>.</p>
     <div class="sbar" id="sbar"></div>
     <div class="studio"><div class="sv" id="sview"></div><div class="ctl" id="sctl"></div></div></div>
-  <div class="card"><h3><span class="em">🖼️</span> Step 3: My gallery</h3><p class="hint">All five slides together. Do they look like one team?</p><div class="gallery" id="gallery"></div></div>
+  <div class="card"><h3><span class="em">🖼️</span> Step 3: My gallery</h3><p class="hint">Your five slides between the template's first and last slides. Do they look like one team?</p><div class="gallery" id="gallery"></div></div>
   <div class="card coach"><h3><span class="em">🚶</span> Step 4: Gallery walk</h3><p class="hint">Show your partner your gallery. They rate it.</p><div id="coach"></div>
     <input class="chip" style="display:block;width:100%;margin-top:6px" id="ctip" placeholder="Partner's top tip (one short idea)" oninput="S.coachTip=this.value"></div>
   <div class="next"><button class="btn" onclick="finishPhase(3)">Next: Evaluate ➜</button></div>
@@ -325,7 +339,7 @@ footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 16px 40p
 <div class="toast" id="toast"></div><canvas id="confetti"></canvas>
 
 <script>
-const S={name:"",points:0,done:[false,false,false,false,false],awarded:{},ab:null,scene:[],wants:[],sortScore:0,fixes:[],tips:[],pwAns:[],tt:0,
+const S={name:"",points:0,done:[false,false,false,false,false],awarded:{},ab:null,scene:[],wants:[],sortScore:0,fixes:[],tips:[],trules:[],pwAns:[],tt:0,
   theme:-1,slides:null,cur:0,coach:{},coachTip:"",quiz:null,quizScore:null,self:{},learned:[],topic:{title:"",idea:""},hook:"",prev:null};
 const PH=["Engage","Explore","Explain","Extend","Evaluate"],PHE=["⚡","🔍","💡","🚀","🏆"];
 const BADGES=[["👀","Sharp Eye"],["🩺","Slide Doctor"],["✨","Visual Thinker"],["🎨","Slide Designer"],["🏆","Visual Master"]];
@@ -346,7 +360,7 @@ function shrinkHero(){const h=$("hero");h.classList.add("small");h.querySelector
 function slideOK(s){if(!s)return false;const hasVis=s.img||s.e||(s.lay==="num"&&s.t.trim())||(s.lay==="word"&&s.t.trim())||(s.lay==="ar"&&s.ar.trim());return !!hasVis&&words(s.t)<=6&&(!s.img||!!s.src)}
 const phaseReq=[()=>(S.ab!==null&&S.scene.length>=SCENES.length)||"Choose slide A or B and finish 'What does this picture say?'.",
   ()=>(!!S.awarded.sort&&S.fixes.length>=FIXES.length)||"Finish the sorting game and apply all the fixes.",
-  ()=>(S.tips.length>=5&&!!S.awarded.pwAll&&!!S.awarded.tt)||"Open all 5 tips, finish 'Idea → picture', and finish 'Tip or trap'.",
+  ()=>(S.tips.length>=5&&!!S.awarded.trules&&!!S.awarded.pwAll&&!!S.awarded.tt)||"Open all 5 tips, tick all the template rules, finish 'Idea → picture' and 'Tip or trap'.",
   ()=>{if(S.theme<0)return "Choose a colour theme.";const bad=S.slides.findIndex(s=>!slideOK(s));if(bad>-1)return `Finish slide ${bad+1}: a picture or big word, 6 words or fewer, and a source for photos.`;return true}];
 function finishPhase(i){const r=phaseReq[i]();if(r!==true){toast("✋ "+r);return}if(!S.done[i]){S.done[i]=true;addPts(20,BADGES[i][0]+" Badge: "+BADGES[i][1]);confetti()}go(i+1)}
 function renderBadges(){$("badges").innerHTML=BADGES.map((b,i)=>`<div class="badge ${S.done[i]?"on":""}"><span class="big">${b[0]}</span>${b[1]}<br><small>${PH[i]}</small></div>`).join("")}
@@ -416,7 +430,10 @@ function pwAns(b,k){const p=PW[pwi];document.querySelectorAll("#pw .opt").forEac
   const fb=$("pwFb");fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=(ok?"✅ ":"❌ ")+p.why;
   const sv=document.querySelector("#pw .ms");sv.innerHTML=`<div class="big" style="font-size:clamp(40px,8vw,72px)">${p.o[p.a][0]}</div><div class="arw ar" style="color:#FFE45E;font-size:clamp(22px,4vw,36px)">${p.ar}</div><div class="cap">${p.en}</div>`;
   setTimeout(()=>{S.pwAns.push(ok);renderPW()},2600)}
-const TT=shuffle([["Use your own photo from a family trip",1],["Copy a full paragraph from a website onto the slide",0],["Use 3 colours on every slide",1],["Use a picture from Google without checking if it's free",0],["Show one big number, like “300”",1],["Use 5 different fonts to look creative",0],["Label an AI-made picture as “AI image”",1],["Read every word on your slide to the audience",0]]);
+const TRULES=[["🔤","Fonts","Clean, sans-serif: Arial, Calibri or Verdana. Only 1–2 fonts."],["🔠","Font sizes","Titles 36–44 pt · main text 24–32 pt · small notes 18–20 pt."],["🌓","Contrast","Dark background → light text. Light background → dark text."],["☝️","One idea per slide","Short, active phrases. Left-align any text."],["📷","High-quality images","Clear, high-resolution, relevant. Keep them inside the margins."],["🧩","One picture style","All photos OR all illustrations, not a mix."],["🆓","Free images","Unsplash, Pixabay, Pexels, or PowerPoint: Insert › Pictures › Stock Images."],["🎨","Simple design","Solid colours or soft gradients · 2–3 main colours."],["✨","Animations","Use them sparingly. Simple ones only: Fade or Appear."]];
+function renderTR(){if(!S.trules)S.trules=[];$("trules").innerHTML=TRULES.map((r,i)=>`<button class="tr ${S.trules.includes(i)?"on":""}" onclick="tapTR(${i})"><span class="ic">${S.trules.includes(i)?"✅":r[0]}</span><span><b>${r[1]}</b><span>${r[2]}</span></span></button>`).join("")}
+function tapTR(i){if(!S.trules.includes(i)){S.trules.push(i);addPts(2)}renderTR();if(S.trules.length>=TRULES.length)awardOnce("trules",10,"📐 Template expert!")}
+const TT=shuffle([["Use Calibri or Arial for all your text",1],["Make the text 14 pt so more words fit",0],["Use a flying, spinning animation on every slide",0],["Mix cartoons and photos on different slides",0],["Use your own photo from a family trip",1],["Copy a full paragraph from a website onto the slide",0],["Use 3 colours on every slide",1],["Use a picture from Google without checking if it's free",0],["Show one big number, like “300”",1],["Use 5 different fonts to look creative",0],["Label an AI-made picture as “AI image”",1],["Read every word on your slide to the audience",0]]);
 let tti=0;
 function drawTT(){$("ttBar").style.width=(tti/TT.length*100)+"%";if(tti>=TT.length){$("ttQ").textContent=`🎉 ${S.tt} / ${TT.length} correct!`;awardOnce("tt",10,"Tip expert!");return}$("ttQ").textContent="“"+TT[tti][0]+"”"}
 function ttAns(k){if(tti>=TT.length)return;const ok=TT[tti][1]===k,fb=$("ttFb");if(ok){S.tt++;addPts(2)}fb.className="fb show "+(ok?"good":"bad");fb.innerHTML=ok?"✅ Correct!":(TT[tti][1]?"❌ This one is actually a good tip!":"❌ Careful, that's a trap!");tti++;drawTT()}
@@ -453,7 +470,9 @@ function setT(f,v){S.slides[S.cur][f]=v;$("sview").innerHTML=`<span class="tagel
   document.querySelectorAll("#sbar button").forEach((b,i)=>b.classList.toggle("ok",slideOK(S.slides[i])))}
 function checkAll(){if(S.slides&&S.slides.every(slideOK)&&S.theme>-1){awardOnce("all5",25,"🎨 Five slides designed!");}}
 function upImg(ev){const f=ev.target.files[0];ev.target.value="";if(!f||!f.type.startsWith("image/")){toast("Please choose an image file");return}const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const max=1100,sc=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);S.slides[S.cur].img=c.toDataURL("image/jpeg",.8);S.slides[S.cur].lay="photo";renderStudio();awardOnce("photo"+S.cur,10,"📷 Your own picture!")};im.onerror=()=>toast("Sorry, this picture can't be opened");im.src=r.result};r.readAsDataURL(f)}
-function renderGallery(){$("gallery").innerHTML=S.slides.map((s,i)=>`<div><div style="font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px">${ELEM[i][0]} ${ELEM[i][1].toUpperCase()}</div>${slideHTML(s,i)}</div>`).join("")}
+function tFirst(){return `<div class="ms" style="background:linear-gradient(135deg,#3C3FB4,#2B2E8F);align-items:flex-start;text-align:left;padding:0 8%"><div class="cap" style="padding:0;font-size:clamp(14px,2.4vw,22px)">${esc(S.topic&&S.topic.title)||"Name of Project"}</div><div style="font-size:11px;opacity:.85;margin-top:4px;font-weight:600">${esc(S.name)||"Student Name"} · H00… · College · Teacher</div></div>`}
+function tLast(){return `<div class="ms" style="background:linear-gradient(135deg,#3C3FB4,#2B2E8F)"><div class="cap">Any Questions?</div></div>`}
+function renderGallery(){$("gallery").innerHTML=`<div><div style="font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px">📐 TEMPLATE · FIRST</div>${tFirst()}</div>`+S.slides.map((s,i)=>`<div><div style="font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px">${ELEM[i][0]} ${ELEM[i][1].toUpperCase()}</div>${slideHTML(s,i)}</div>`).join("")+`<div><div style="font-size:12px;font-weight:900;color:var(--muted);margin-bottom:4px">📐 TEMPLATE · LAST</div>${tLast()}</div>`}
 const COACH=["🎨 One colour theme","✂️ 6 words or fewer","🖼️ Big, clear visuals","🎯 Visuals match the message","🏷️ Pictures have sources"];
 function renderCoach(){$("coach").innerHTML=COACH.map((c,i)=>`<div class="it">${c}<div class="lvl">${["Not yet","Getting there","Yes!"].map((l,k)=>`<button class="${S.coach[i]===k?"on":""}" onclick="S.coach[${i}]=${k};renderCoach();if(Object.keys(S.coach).length>=5)awardOnce('coach',10,'Gallery walk done')">${l}</button>`).join("")}</div></div>`).join("");$("ctip").value=S.coachTip}
 
@@ -487,8 +506,8 @@ function renderGloss(){$("gloss").innerHTML=GLOSS.map(g=>`<div class="gc" onclic
 function printCard(){if(!S.slides)initSlides();
   $("printCard").innerHTML=`<div class="ph"><div><h1>🖼️ My Slide Storyboard</h1><div style="opacity:.8">TED Talk Series · App 5 · LSC 1503 · ${esc(S.name)} · ${new Date().toLocaleDateString("en-GB")}</div></div><div style="font-size:26px">🎨</div></div>
   <div class="pb"><b>Title · Theme</b>${esc(S.topic.title)||"&nbsp;"} · ${S.theme>-1?THEMES[S.theme][0]:"no theme yet"}</div>
-  <div class="sb">${S.slides.map((s,i)=>`<div class="sbi"><b>${ELEM[i][0]} ${ELEM[i][1]}</b>${slideHTML(s,i)}${s.img?`<small>Picture: ${esc(s.src)}${s.ref?" · "+esc(s.ref):""}</small>`:""}</div>`).join("")}
-  <div class="sbi"><b>Partner gallery walk</b>${COACH.map((c,i)=>`${c}: <strong>${S.coach[i]!==undefined?["Not yet","Getting there","Yes!"][S.coach[i]]:"–"}</strong>`).join("<br>")}<br><br><b>Top tip</b>${esc(S.coachTip)||"–"}<br><br><b>Quiz · Points</b>${S.quizScore!==null?S.quizScore+"/"+QUIZ.length:"not yet"} · 🎨 ${S.points} pts</div></div>
+  <div class="sb"><div class="sbi"><b>📐 Template · first slide</b>${tFirst()}</div>${S.slides.map((s,i)=>`<div class="sbi"><b>${ELEM[i][0]} ${ELEM[i][1]}</b>${slideHTML(s,i)}${s.img?`<small>Picture: ${esc(s.src)}${s.ref?" · "+esc(s.ref):""}</small>`:""}</div>`).join("")}
+  <div class="sbi"><b>📐 Template · last slide</b>${tLast()}</div><div class="sbi"><b>Partner gallery walk</b>${COACH.map((c,i)=>`${c}: <strong>${S.coach[i]!==undefined?["Not yet","Getting there","Yes!"][S.coach[i]]:"–"}</strong>`).join("<br>")}<br><br><b>Top tip</b>${esc(S.coachTip)||"–"}<br><br><b>Quiz · Points</b>${S.quizScore!==null?S.quizScore+"/"+QUIZ.length:"not yet"} · 🎨 ${S.points} pts</div></div>
   <p style="text-align:center;font-size:11px;margin-top:10px;color:#5D6280">Build these slides in the HCT template · Designed by: Nazila Motahari · HCT</p>`;doPrint("printCard");awardOnce("print",5,"Storyboard ready")}
 function printCert(){$("cert").innerHTML=`<div class="certin"><div style="font-size:60px">🖼️</div><div style="letter-spacing:3px;font-weight:800;color:#5D6280">CERTIFICATE OF ACHIEVEMENT</div><h1>Slide Studio</h1><p style="margin-top:10px">This certifies that</p><div class="nm">${esc(S.name)||"Student"}</div><p>can design TED slides that speak:<br>strong visuals, few words, one colour theme.</p><p style="margin-top:14px;font-weight:800">Quiz score: ${S.quizScore}/${QUIZ.length} · ${new Date().toLocaleDateString("en-GB")}</p><div style="font-size:30px;margin-top:14px">${BADGES.map((b,i)=>S.done[i]?b[0]:"").join(" ")}</div><p style="margin-top:20px;font-size:13px;color:#5D6280">TED Talk Series · App 5 · LSC 1503 Professional Spoken Communication · HCT<br>Designed by: Nazila Motahari</p></div>`;doPrint("cert")}
 function doPrint(id){const el=$(id);el.classList.add("printing");setTimeout(()=>{window.print();el.classList.remove("printing")},150)}
@@ -506,7 +525,7 @@ function loadJSON(ev){const f=ev.target.files[0];if(!f)return;const r=new FileRe
   catch(e){toast("❌ This is not a TED Talk Studio JSON file")}};r.readAsText(f);ev.target.value=""}
 function confetti(){const c=$("confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;const cols=["#2541B2","#FFE45E","#FF6392","#1FA971","#FFFFFF"],P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*6,c:cols[Math.random()*5|0],vy:2+Math.random()*3,vx:-1.5+Math.random()*3,a:Math.random()*6}));
   let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);x.restore()});if(++t<170)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
-function renderAll(){$("pts").textContent="🎨 "+S.points+" pts";if(!S.slides)initSlides();renderTabs();renderAB();sci=S.scene.length;drawScene();renderWants();renderBins();drawSort();renderDoc();renderTips();renderPW();drawTT();renderPal();renderStudio();renderCoach();renderSelf();renderLearned();renderGloss();if(S.quiz&&S.quizScore!==null){qi=S.quiz.length;drawQuiz()}}
+function renderAll(){$("pts").textContent="🎨 "+S.points+" pts";if(!S.slides)initSlides();renderTabs();renderAB();sci=S.scene.length;drawScene();renderWants();renderBins();drawSort();renderDoc();renderTips();renderTR();renderPW();drawTT();renderPal();renderStudio();renderCoach();renderSelf();renderLearned();renderGloss();if(S.quiz&&S.quizScore!==null){qi=S.quiz.length;drawQuiz()}}
 renderAll();
 </script>
 </body>
